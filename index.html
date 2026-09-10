@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amado Leather — Cuero genuino, hecho a mano</title>
+<style>
+  :root{
+    --ink:#1B1512;
+    --ink-soft:#2E2521;
+    --paper:#EFE8D8;
+    --paper-dim:#E4DBC6;
+    --saddle:#7A4B2A;
+    --saddle-dk:#5C3620;
+    --brass:#9C7A3C;
+    --oxblood:#5E1F1A;
+    --line:rgba(27,21,18,0.16);
+    --line-lt:rgba(239,232,216,0.28);
+    --serif: "Iowan Old Style","Georgia","Times New Roman",serif;
+    --sans: "Neue Haas Grotesk","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px;}
+  @media(max-width:640px){.wrap{padding:0 20px;}}
+
+  /* ---- image slot placeholder (remove/replace with real <img> in WP) ---- */
+  .imgslot{
+    position:relative;
+    background:
+      repeating-linear-gradient(135deg, rgba(27,21,18,0.05) 0 2px, transparent 2px 14px),
+      linear-gradient(160deg,#d8cdb2,#c3b393);
+    border:1px dashed rgba(27,21,18,0.35);
+    display:flex;align-items:flex-end;justify-content:flex-start;
+    overflow:hidden;
+  }
+  .imgslot span{
+    font-family:var(--sans);
+    font-size:11px;
+    letter-spacing:.04em;
+    color:var(--ink-soft);
+    background:rgba(239,232,216,0.85);
+    padding:6px 10px;
+    margin:12px;
+    border:1px solid var(--line);
+  }
+  .imgslot img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+
+  /* stitch motif */
+  .stitch{
+    height:1px;
+    background-image:linear-gradient(90deg, var(--brass) 60%, transparent 0%);
+    background-size:14px 1px;
+    background-repeat:repeat-x;
+    opacity:.55;
+  }
+
+  /* ---------------- NAV ---------------- */
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:rgba(239,232,216,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:84px;
+  }
+  .brandmark{
+    font-family:var(--serif);
+    font-size:22px;
+    letter-spacing:.02em;
+    font-weight:600;
+    text-decoration:none;
+  }
+  .brandmark em{font-style:italic;font-weight:400;color:var(--saddle-dk);}
+  .navlinks{display:flex;gap:36px;list-style:none;margin:0;padding:0;}
+  .navlinks a{
+    text-decoration:none;font-size:14.5px;color:var(--ink-soft);
+    position:relative;padding-bottom:4px;
+  }
+  .navlinks a:hover{color:var(--ink);}
+  .navlinks a::after{
+    content:"";position:absolute;left:0;bottom:0;width:0;height:1px;
+    background:var(--saddle);transition:width .25s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+  .navcta{
+    font-size:13.5px;padding:11px 20px;border:1px solid var(--ink);
+    text-decoration:none;white-space:nowrap;
+  }
+  .navcta:hover{background:var(--ink);color:var(--paper);}
+  .navtoggle{display:none;}
+  @media(max-width:900px){
+    .navlinks{display:none;}
+  }
+
+  /* ---------------- HERO ---------------- */
+  .hero{
+    display:grid;grid-template-columns:1.05fr .95fr;align-items:stretch;
+    min-height:640px;
+  }
+  .hero-copy{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:64px 64px 64px 32px;
+    max-width:560px;
+  }
+  .hero-kicker{
+    font-size:13px;color:var(--saddle-dk);letter-spacing:.03em;margin-bottom:18px;
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:clamp(40px,5vw,60px);
+    line-height:1.04;
+    margin:0 0 26px;
+  }
+  .hero h1 .cursiva{font-style:italic;color:var(--saddle-dk);}
+  .hero p.lede{
+    font-size:17.5px;color:var(--ink-soft);max-width:440px;margin:0 0 34px;
+  }
+  .hero-actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--ink);color:var(--paper);text-decoration:none;
+    padding:15px 30px;font-size:14.5px;letter-spacing:.02em;
+  }
+  .btn-primary:hover{background:var(--saddle-dk);}
+  .btn-text{
+    text-decoration:none;font-size:14.5px;border-bottom:1px solid var(--ink);
+    padding-bottom:2px;
+  }
+  .hero-stats{
+    display:flex;gap:40px;margin-top:56px;padding-top:26px;
+    border-top:1px solid var(--line);
+  }
+  .hero-stats div{font-family:var(--serif);font-size:26px;}
+  .hero-stats small{display:block;font-family:var(--sans);font-size:12px;color:var(--ink-soft);margin-top:4px;}
+  .hero-visual{position:relative;}
+  .hero-visual .imgslot{height:100%;width:100%;}
+  .hero-visual .badge{
+    position:absolute;left:-1px;bottom:40px;
+    background:var(--saddle-dk);color:var(--paper);
+    padding:20px 24px;max-width:240px;
+    font-family:var(--serif);font-size:15px;line-height:1.4;
+  }
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;}
+    .hero-copy{padding:48px 20px 40px;max-width:none;}
+    .hero-visual{height:420px;}
+    .hero-visual .badge{display:none;}
+  }
+
+  /* ---------------- MARQUEE STRIP ---------------- */
+  .strip{
+    background:var(--ink);color:var(--paper);
+    overflow:hidden;white-space:nowrap;padding:14px 0;
+  }
+  .strip-track{
+    display:inline-block;
+    animation:scroll 28s linear infinite;
+    font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.02em;
+  }
+  .strip-track span{margin:0 34px;color:var(--brass);}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------------- SECTION HEAD ---------------- */
+  .section{padding:96px 0;}
+  .section.tight{padding:72px 0;}
+  .section-head{
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;
+    margin-bottom:56px;
+  }
+  .section-head h2{
+    font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.4vw,42px);
+    margin:0;line-height:1.12;
+  }
+  .section-head p{font-size:15.5px;color:var(--ink-soft);max-width:420px;margin:0;}
+  @media(max-width:760px){.section-head{grid-template-columns:1fr;}}
+
+  /* ---------------- CRAFT / STORY ---------------- */
+  .craft{
+    display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:center;
+  }
+  .craft .imgslot{aspect-ratio:4/5;}
+  .craft-copy h3{
+    font-family:var(--serif);font-weight:500;font-size:30px;margin:0 0 20px;
+  }
+  .craft-copy p{font-size:15.5px;color:var(--ink-soft);margin:0 0 18px;max-width:520px;}
+  .craft-steps{list-style:none;margin:32px 0 0;padding:0;display:flex;flex-direction:column;gap:0;}
+  .craft-steps li{
+    display:grid;grid-template-columns:56px 1fr;gap:18px;
+    padding:20px 0;border-top:1px solid var(--line);
+  }
+  .craft-steps li:last-child{border-bottom:1px solid var(--line);}
+  .craft-steps .num{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--saddle-dk);}
+  .craft-steps b{display:block;font-size:15px;margin-bottom:3px;font-weight:600;}
+  .craft-steps small{font-size:13.5px;color:var(--ink-soft);}
+  @media(max-width:820px){.craft{grid-template-columns:1fr;}}
+
+  /* ---------------- PRODUCT GALLERY (editorial, not cards) ---------------- */
+  .gallery{
+    display:grid;grid-template-columns:repeat(3,1fr);
+  }
+  .gitem{
+    position:relative;border-right:1px solid var(--line);
+  }
+  .gitem:last-child{border-right:none;}
+  .gitem .imgslot{aspect-ratio:3/4;}
+  .gitem-info{padding:22px 26px 32px;}
+  .gitem-info .cat{font-size:12px;color:var(--saddle-dk);letter-spacing:.02em;margin-bottom:8px;}
+  .gitem-info h4{font-family:var(--serif);font-weight:500;font-size:21px;margin:0 0 8px;}
+  .gitem-info p{font-size:14px;color:var(--ink-soft);margin:0 0 14px;}
+  .gitem-info .price{font-size:14.5px;font-weight:600;}
+  @media(max-width:820px){
+    .gallery{grid-template-columns:1fr;}
+    .gitem{border-right:none;border-bottom:1px solid var(--line);}
+  }
+
+  /* ---------------- QUOTE / REVIEW ---------------- */
+  .quote-band{
+    background:var(--saddle-dk);color:var(--paper);
+    padding:90px 0;text-align:center;
+  }
+  .quote-band .stars{font-size:14px;letter-spacing:.3em;color:var(--brass);margin-bottom:26px;}
+  .quote-band blockquote{
+    font-family:var(--serif);font-style:italic;font-weight:400;
+    font-size:clamp(22px,3vw,32px);line-height:1.4;max-width:760px;
+    margin:0 auto 24px;
+  }
+  .quote-band cite{font-style:normal;font-size:13.5px;color:rgba(239,232,216,0.72);}
+
+  /* ---------------- CORPORATE GIFTING ---------------- */
+  .gift{
+    display:grid;grid-template-columns:1fr 1fr;
+  }
+  .gift .imgslot{min-height:520px;}
+  .gift-copy{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:70px 72px;background:var(--paper-dim);
+  }
+  .gift-copy h2{font-family:var(--serif);font-weight:500;font-size:34px;margin:0 0 20px;}
+  .gift-copy p{font-size:15.5px;color:var(--ink-soft);margin:0 0 30px;max-width:440px;}
+  .gift-list{list-style:none;margin:0 0 34px;padding:0;}
+  .gift-list li{
+    padding:12px 0;border-top:1px solid var(--line);
+    font-size:14.5px;display:flex;justify-content:space-between;
+  }
+  .gift-list li:last-child{border-bottom:1px solid var(--line);}
+  @media(max-width:820px){
+    .gift{grid-template-columns:1fr;}
+    .gift-copy{padding:52px 24px;}
+  }
+
+  /* ---------------- NEWSLETTER (empty form slot for WP) ---------------- */
+  .newsletter{
+    background:var(--ink);color:var(--paper);
+    padding:86px 0;
+  }
+  .nl-inner{
+    display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+  }
+  .newsletter h2{font-family:var(--serif);font-weight:500;font-size:32px;margin:0 0 14px;}
+  .newsletter p{font-size:15px;color:rgba(239,232,216,0.7);max-width:400px;margin:0;}
+  .nl-formslot{
+    border:1px dashed rgba(239,232,216,0.4);
+    padding:34px;min-height:120px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12.5px;color:rgba(239,232,216,0.55);text-align:center;
+  }
+  @media(max-width:760px){.nl-inner{grid-template-columns:1fr;}}
+
+  /* ---------------- FOOTER ---------------- */
+  footer.site{padding:64px 0 32px;}
+  .foot-grid{
+    display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:40px;
+    padding-bottom:48px;border-bottom:1px solid var(--line);
+  }
+  .foot-brand .brandmark{display:block;margin-bottom:14px;}
+  .foot-brand p{font-size:13.5px;color:var(--ink-soft);max-width:260px;}
+  .foot-col h5{font-size:12.5px;letter-spacing:.03em;color:var(--saddle-dk);margin:0 0 16px;}
+  .foot-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px;}
+  .foot-col a{text-decoration:none;font-size:13.5px;color:var(--ink-soft);}
+  .foot-col a:hover{color:var(--ink);}
+  .foot-bottom{
+    display:flex;justify-content:space-between;align-items:center;padding-top:24px;
+    font-size:12.5px;color:var(--ink-soft);flex-wrap:wrap;gap:12px;
+  }
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="wrap">
+    <a href="#" class="brandmark">Amado <em>Leather</em></a>
+    <ul class="navlinks">
+      <li><a href="#coleccion">Colección</a></li>
+      <li><a href="#oficio">El oficio</a></li>
+      <li><a href="#regalos">Regalos de empresa</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="#coleccion" class="navcta">Ver piezas</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-copy">
+    <div class="hero-kicker">Marroquinería hecha a mano en Chile</div>
+    <h1>Cuero que <span class="cursiva">envejece</span><br>mejor que uno nuevo.</h1>
+    <p class="lede">Billeteras, cinturones y piezas de autor curtidas y cosidas a mano, una por una, para durar generaciones — no temporadas.</p>
+    <div class="hero-actions">
+      <a href="#coleccion" class="btn-primary">Ver la colección</a>
+      <a href="#oficio" class="btn-text">Conocer el oficio →</a>
+    </div>
+    <div class="hero-stats">
+      <div>100%<small>Cuero genuino</small></div>
+      <div>5.0<small>48 reseñas verificadas</small></div>
+      <div>1 a 1<small>Piezas hechas a mano</small></div>
+    </div>
+  </div>
+  <div class="hero-visual imgslot">
+    <span>IMG · foto hero: artesano trabajando el cuero o pieza terminada, retrato vertical</span>
+    <div class="badge">"Cada pieza lleva el tiempo de quien la hizo."</div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-track">
+    <span>★ Cuero genuino</span><span>★ Hecho a mano en Chile</span><span>★ Envío a todo el país</span><span>★ Grabado personalizado</span><span>★ Cuero genuino</span><span>★ Hecho a mano en Chile</span><span>★ Envío a todo el país</span><span>★ Grabado personalizado</span>
+  </div>
+</div>
+
+<section class="section" id="oficio">
+  <div class="wrap">
+    <div class="craft">
+      <div class="imgslot">
+        <span>IMG · manos trabajando el cuero, taller</span>
+      </div>
+      <div class="craft-copy">
+        <h3>No fabricamos accesorios. Curtimos historias.</h3>
+        <p>Amado Leather nace de un oficio antiguo: seleccionar el cuero correcto, cortarlo con criterio y coserlo a mano hasta que la pieza esté lista para acompañar a alguien por años. Sin líneas de producción, sin sintéticos, sin atajos.</p>
+        <p>Cada billetera y cinturón que sale de nuestro taller pasa por las mismas manos, de principio a fin.</p>
+        <ul class="craft-steps">
+          <li><span class="num">01</span><div><b>Selección del cuero</b><small>Curtido vegetal, elegido pieza por pieza por su textura y grosor.</small></div></li>
+          <li><span class="num">02</span><div><b>Corte y armado</b><small>Patrones propios, cortados a mano sobre cada cuero.</small></div></li>
+          <li><span class="num">03</span><div><b>Costura a mano</b><small>Punto de silla, el mismo método usado en talabartería desde hace siglos.</small></div></li>
+          <li><span class="num">04</span><div><b>Terminación</b><small>Bordes sellados y pulidos a mano, listo para grabar si es un regalo.</small></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section tight" id="coleccion" style="background:var(--paper-dim);">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>La colección</h2>
+      <p>Piezas esenciales, pensadas para el uso diario — y para durar mucho más que eso.</p>
+    </div>
+  </div>
+  <div class="gallery">
+    <div class="gitem">
+      <div class="imgslot"><span>IMG · billetera de cuero, fondo neutro</span></div>
+      <div class="gitem-info">
+        <div class="cat">Billeteras</div>
+        <h4>Billetera Clásica</h4>
+        <p>Cuero curtido vegetal, interior con espacio para tarjetas y efectivo.</p>
+        <div class="price">Desde $30.700</div>
+      </div>
+    </div>
+    <div class="gitem">
+      <div class="imgslot"><span>IMG · cinturón de cuero, detalle de hebilla</span></div>
+      <div class="gitem-info">
+        <div class="cat">Cinturones</div>
+        <h4>Cinturón Talabartero</h4>
+        <p>Costura visible a mano, hebilla intercambiable.</p>
+        <div class="price">Desde $27.900</div>
+      </div>
+    </div>
+    <div class="gitem">
+      <div class="imgslot"><span>IMG · tarjetero o pechera de asador</span></div>
+      <div class="gitem-info">
+        <div class="cat">Marroquinería fina</div>
+        <h4>Tarjetero y Pechera de Asador</h4>
+        <p>Piezas complementarias para quien ya sabe lo que quiere.</p>
+        <div class="price">Desde $18.500</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-band">
+  <div class="wrap">
+    <div class="stars">★★★★★</div>
+    <blockquote>"Se nota que no es una billetera más. Es la primera vez que compro algo y siento que va a durar toda la vida."</blockquote>
+    <cite>— Reseña verificada, cliente Amado Leather</cite>
+  </div>
+</section>
+
+<section class="gift" id="regalos">
+  <div class="imgslot">
+    <span>IMG · pack de regalo corporativo, cajas con grabado</span>
+  </div>
+  <div class="gift-copy">
+    <h2>Regalos de empresa que sí se usan.</h2>
+    <p>Packs corporativos de fin de año, aniversarios o bienvenidas — con grabado de iniciales o logo. Nada de bolsos genéricos: cada persona recibe una pieza con su nombre.</p>
+    <ul class="gift-list">
+      <li>Pedido mínimo <span>Consultar por volumen</span></li>
+      <li>Grabado personalizado <span>Incluido</span></li>
+      <li>Tiempo de producción <span>10–15 días hábiles</span></li>
+      <li>Despacho <span>Todo Chile</span></li>
+    </ul>
+    <a href="#contacto" class="btn-primary" style="align-self:flex-start;">Cotizar regalos corporativos</a>
+  </div>
+</section>
+
+<section class="newsletter" id="contacto">
+  <div class="wrap nl-inner">
+    <div>
+      <h2>El taller, directo a tu correo.</h2>
+      <p>Nuevas piezas, procesos y disponibilidad limitada — sin spam, solo cuero.</p>
+    </div>
+    <!-- ⬇⬇ Reemplazar este bloque por el shortcode/formulario de newsletter de WordPress (Mailchimp, WPForms, etc.) ⬇⬇ -->
+    <div class="nl-formslot">
+      [ Aquí va el formulario de newsletter / contacto de WordPress ]
+    </div>
+    <!-- ⬆⬆ fin del bloque a reemplazar ⬆⬆ -->
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#" class="brandmark">Amado <em>Leather</em></a>
+        <p>Marroquinería de cuero genuino, hecha a mano en Chile. Un oficio, no una fábrica.</p>
+      </div>
+      <div class="foot-col">
+        <h5>TIENDA</h5>
+        <ul>
+          <li><a href="#">Billeteras</a></li>
+          <li><a href="#">Cinturones</a></li>
+          <li><a href="#">Marroquinería fina</a></li>
+          <li><a href="#">Regalos de empresa</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>NOSOTROS</h5>
+        <ul>
+          <li><a href="#oficio">El oficio</a></li>
+          <li><a href="#">Cuidado del cuero</a></li>
+          <li><a href="#">Preguntas frecuentes</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>VISÍTANOS</h5>
+        <ul>
+          <li><a href="#">Mall Costanera Center</a></li>
+          <li><a href="#">Mall Vespucio</a></li>
+          <li><a href="#">Instagram @amadoleather</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© Amado Leather — Todos los derechos reservados.</span>
+      <span>Hecho a mano en Chile.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
